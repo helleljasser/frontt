@@ -1,0 +1,70 @@
+<div class="flex flex-col flex-auto md:w-160 max-h-160 -m-6 overflow-y-auto">
+    <!-- En-tête -->
+    <div class="flex items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Board</div>
+        <!-- Bouton de fermeture -->
+        <button mat-icon-button (click)="matDialogRef.close()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        </button>
+    </div>
+    <!-- Formulaire du tableau -->
+    <form  class="flex flex-col flex-0  w-full p-6 sm:p-8 space-y-6 overflow-y-auto" [formGroup]="boardForm" >
+        
+         <div class="items-start">
+        <!-- Champ de saisie pour le titre -->
+        <mat-form-field class="w-full">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+        </mat-form-field>
+        <!-- Champ de saisie pour l'icône -->   
+        <mat-form-field class="w-full">
+            <mat-label>Icon</mat-label>
+            <input matInput formControlName="icon" >
+        </mat-form-field>
+        <!-- Champ de saisie pour la description -->
+        <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+            <mat-label>Description</mat-label>
+            <textarea matInput [formControlName]="'description'" [rows]="1" cdkTextareaAutosize [cdkAutosizeMinRows]="1"></textarea>
+        </mat-form-field>
+    </div>
+        <!-- Champs de saisie pour les dates -->
+        <div class="flex">
+            <!-- Date de la dernière activité -->
+            <mat-form-field class="w-1/2 pr-2">
+                <mat-label>Last Activity</mat-label>
+                <input matInput [matDatepicker]="lastDatePicker" formControlName="last_activity">
+                <mat-datepicker-toggle matSuffix [for]="lastDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #lastDatePicker></mat-datepicker>
+            </mat-form-field>
+            <!-- Date de création -->
+            <mat-form-field class="w-1/2 pl-2">
+                <mat-label>Created At</mat-label>
+                <input matInput [matDatepicker]="createdAtDatePicker" formControlName="createdAt" readonly>
+                <mat-datepicker-toggle matSuffix [for]="createdAtDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #createdAtDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <!-- Boutons -->
+        <div class="flex items-center justify-between w-full border-t px-8 py-4">
+            <!-- Bouton de suppression -->
+            <button class="-ml-4" mat-button [color]="'warn'" (click)="deleteBoard()">Delete</button>
+            <!-- Message flash -->
+            <div class="flex items-center">
+                <div class="flex items-center mr-4" *ngIf="flashMessage">
+                    <!-- Message de succès -->
+                    <ng-container *ngIf="flashMessage === 'success'">
+                        <mat-icon class="text-green-500" [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <span class="ml-2">Project updated</span>
+                    </ng-container>
+                    <!-- Message d'erreur -->
+                    <ng-container *ngIf="flashMessage === 'error'">
+                        <mat-icon class="text-red-500" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                        <span class="ml-2">An error occurred, try again!</span>
+                    </ng-container>
+                </div>
+                <!-- Bouton de mise à jour -->
+                <button mat-flat-button [color]="'primary'" (click)="updateBoard()">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

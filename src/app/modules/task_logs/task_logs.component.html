@@ -1,0 +1,29 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <!-- CONTENT GOES HERE -->
+        <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+            <h1>Liste des utilisateurs</h1>
+            <div *ngFor="let action of task_logs">
+              <div>
+                <h3>{{ action.actionname }}</h3>
+                <p>ID: {{ action.id }}</p>
+                <p>Description: {{ action.actiondescription }}</p>
+                <p>Company ID: {{ action.companyID }}</p>
+                <p>Created At: {{ action.createdAt }}</p>
+                <p>Issue ID: {{ action.issueID }}</p>
+                <p>Project ID: {{ action.projectID }}</p>
+              </div>
+              <hr>
+            </div>
+            
+            
+            
+            
+        </div>
+
+    </div>
+
+</div>

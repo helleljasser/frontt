@@ -1,0 +1,110 @@
+<div class="flex flex-col flex-auto md:w-240 max-h-240 -m-6 overflow-y-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Issue</div>
+        <!-- Close Button -->
+        <button mat-icon-button (click)="closeDetails()" tabindex="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        </button>
+    </div>
+    <!-- Table Form -->
+    <form class="flex flex-col flex-0 w-full p-6 sm:p-8 space-y-6 overflow-y-auto" [formGroup]="issueForm">
+        <div class="flex flex-auto flex-wrap">
+            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                <div class="flex">
+                    <!-- Assigned To -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Assigned To</mat-label>
+                        <mat-select formControlName="assigned_to">
+                          <mat-option *ngFor="let user of users" [value]="user.id">
+                            {{ user.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <!-- Status -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>Status</mat-label>
+                        <mat-select [formControlName]="'status'">
+                            <mat-option value="Waiting">Waiting</mat-option>
+                            <mat-option value="in progress">In progress</mat-option>
+                            <mat-option value="finished">Finished</mat-option>
+                            <mat-option value="stopped">Stopped</mat-option>
+                            <mat-option value="error">Error</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <!-- Priority -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Priority</mat-label>
+                        <mat-select [formControlName]="'priority'">
+                            <mat-option value="Low">Low</mat-option>
+                            <mat-option value="Normal">Normal</mat-option>
+                            <mat-option value="High">High</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Project ID -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>Project</mat-label>
+                        <mat-select formControlName="project_id">
+                          <mat-option *ngFor="let project of projects" [value]="project.id">
+                            {{ project.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      
+                </div>
+            </div>
+            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                <div class="flex">
+                    <!-- Start Date -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="hireDatePicker" formControlName="start_date">
+                        <mat-datepicker-toggle matSuffix [for]="hireDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #hireDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <!-- End Date -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="lastDatePicker" formControlName="end_date">
+                        <mat-datepicker-toggle matSuffix [for]="lastDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #lastDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <!-- Task ID -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Task</mat-label>
+                        <textarea matInput formControlName="task_id" rows="1" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
+                    </mat-form-field>
+                    <!-- Files Path -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>Files Path</mat-label>
+                        <textarea matInput formControlName="files_path" rows="1" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <!-- Buttons -->
+        <div class="flex items-center justify-between w-full border-t px-8 py-4">
+            <!-- Flash Message -->
+            <div class="flex items-center">
+                <div class="flex items-center mr-4" *ngIf="flashMessage">
+                    <!-- Success Message -->
+                    <ng-container *ngIf="flashMessage === 'success'">
+                        <mat-icon class="text-green-500" [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <span class="ml-2">Project updated</span>
+                    </ng-container>
+                    <!-- Error Message -->
+                    <ng-container *ngIf="flashMessage === 'error'">
+                        <mat-icon class="text-red-500" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                        <span class="ml-2">An error occurred, try again!</span>
+                    </ng-container>
+                </div>
+                <!-- Create Button -->
+                <button mat-flat-button color="primary" (click)="CreateIssue()">Create</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,122 @@
+<div class="flex flex-col flex-auto md:w-240 max-h-240 -m-6 overflow-y-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Project</div>
+        <button mat-icon-button (click)="matDialogRef.close()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        </button>
+    </div>
+    <!-- Project form -->
+    <form class="flex flex-col flex-0 w-full p-6 sm:p-8 space-y-6 overflow-y-auto" [formGroup]="projectForm">
+        <div class="flex flex-auto flex-wrap">
+            <div class="flex flex-col w-full lg:w-2/4 sm:pr-8">
+                <div class="flex">
+                    <!-- First Name -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label> Name</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+
+                    <!-- Last Name -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>Type</mat-label>
+                        <mat-select [formControlName]="'type'">
+                            <mat-option value="scrum">Scrum</mat-option>
+                            <mat-option value="Predictive">Predictive</mat-option>
+                        </mat-select>
+                        <!-- Date of Birth -->
+                        </mat-form-field>
+                    
+                </div>
+                <!-- Email -->
+                <mat-form-field class="w-full">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="description">
+                </mat-form-field>
+
+                <!-- Gender and Date of Birth -->
+                <div class="flex">
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Status</mat-label>
+                        <mat-select [formControlName]="'status'">
+                            <mat-option value="Waiting">Waiting</mat-option>
+                            <mat-option value="in progress">In progress</mat-option>
+                            <mat-option value="finished">Finished</mat-option>
+                            <mat-option value="stopped">Stopped</mat-option>
+                            <mat-option value="error">Error</mat-option>
+                        </mat-select>
+                        <!-- Date of Birth -->
+                        </mat-form-field>
+                    <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Priority</mat-label>
+                    <mat-select [formControlName]="'priority'">
+                        <mat-option value="Low">Low</mat-option>
+                        <mat-option value="Normal">Normal</mat-option>
+                        <mat-option value="High">High</mat-option>
+                    </mat-select>
+                    <!-- Date of Birth -->
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <!-- Country Code -->
+                            <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="startDatePicker" formControlName="start_date">
+                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- Address -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="endDatePicker" formControlName="end_date">
+                        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                <div class="flex">
+                    <!-- Role -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>Budget</mat-label>
+                        <input matInput type="number" formControlName="budget">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>product owner</mat-label>
+                        <input matInput formControlName="product_owner">
+                    </mat-form-field>
+                </div>
+                <div class="flex">
+                    <!-- Date of Hire -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>files_path</mat-label>
+                        <input matInput formControlName="files_path">
+                    </mat-form-field>
+            
+                </div>
+
+             
+            </div>
+        </div>
+        <!-- Buttons -->
+        <div class="flex items-center justify-between w-full border-t px-8 py-4">
+            <!-- Flash Message -->
+            <div class="flex items-center flex-grow"> <!-- Ajout de flex-grow -->
+                <div class="flex items-center mr-4" *ngIf="flashMessage">
+                    <ng-container *ngIf="flashMessage === 'success'">
+                        <mat-icon class="text-green-500" [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <span class="ml-2">Project Created</span>
+                    </ng-container>
+                    <ng-container *ngIf="flashMessage === 'error'">
+                        <mat-icon class="text-red-500" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                        <span class="ml-2">An error occurred, try again!</span>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Update Button -->
+            <button mat-flat-button [color]="'primary'" (click)="createProject()">Create</button>
+        </div>
+        
+    </form>
+</div>

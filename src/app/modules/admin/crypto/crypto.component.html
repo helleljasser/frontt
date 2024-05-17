@@ -1,0 +1,109 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <mat-drawer-container class="flex-auto h-full">
+        <!-- Drawer -->
+        <mat-drawer
+            class="w-80"
+            [autoFocus]="false"
+            [mode]="drawerMode"
+            [opened]="drawerOpened"
+            #matDrawer>
+
+            <div class="flex flex-col flex-auto h-full dark:bg-default">
+
+                <!-- Watchlist -->
+                <div class="flex flex-col flex-0">
+                    <div
+                        class="flex flex-0 items-center p-5 border-b group w-full select-none hover:bg-gray-100 dark:hover:bg-hover"
+                        *ngFor="let item of data.watchlist"
+                        
+                        (click)="onWatchlistItemClicked(item)">
+
+                        <div class="flex flex-col flex-auto pr-6">
+
+                            <div class="flex items-baseline">
+                                <div class="mr-1 font-medium text-md text-secondary">{{item.title}}</div>
+                            
+                            </div>
+                            <div class="flex items-end mt-2">
+                                <div class="min-w-20 font-mono text-2xl tracking-tighter leading-none">
+                                    {{item.amount | currency:'USD':'symbol':'1.2-4'}}
+                                </div>
+                            
+                                <div
+                                    class="font-mono font-medium text-sm leading-none mb-px">
+                                    {{item.trend.amount}}%
+                                </div>
+                            </div>
+                        </div>
+                    <div
+                            class="flex flex-auto items-center h-10 overflow-hidden">
+                            jesser
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Buy / Sell -->
+             
+
+            </div>
+
+        </mat-drawer>
+
+        <!-- Content -->
+        <mat-drawer-content class="flex flex-col">
+
+            <!-- BTC Price -->
+            <div class="flex flex-col flex-auto min-h-full bg-card dark:bg-default">
+                <div class="flex flex-wrap items-center pl-4 pr-6 py-3 md:pl-6 border-b">
+                    <button
+                        class="mr-6 lg:hidden"
+                        mat-icon-button
+                        (click)="matDrawer.toggle()">
+                        <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+                    </button>
+                    <div class="flex flex-col flex-auto my-3 mr-6">
+                        <div class="flex items-center">
+                            <div class="font-medium text-2xl text-secondary mr-2">Bitcoin</div>
+                            <div class="font-medium text-lg text-hint tracking-wider">(BTC)</div>
+                        </div>
+                        <div class="flex items-end mt-1">
+                            <div class="mr-2 font-mono text-3xl leading-none tracking-tight">{{data.btc.amount | currency:'USD':'symbol':'1.2-2'}}</div>
+                            <mat-icon
+                                class="text-green-500 icon-size-5 mr-0.5 mb-px"
+                                [ngClass]="{'text-green-500': data.btc.trend.dir === 'up', 'text-red-500': data.btc.trend.dir === 'down'}"
+                                [svgIcon]="data.btc.trend.dir === 'up' ? 'heroicons_mini:arrow-long-up' : 'heroicons_mini:arrow-long-down'"></mat-icon>
+                            <div
+                                class="font-mono font-medium text-lg leading-none mb-px"
+                                [ngClass]="{'text-green-500': data.btc.trend.dir === 'up', 'text-red-500': data.btc.trend.dir === 'down'}">
+                                {{data.btc.trend.amount}}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex items-center my-3">
+                        <div class="p-4 leading-none rounded-l-xl border border-r-0">
+                            <div class="text-sm font-medium text-secondary">Market Cap</div>
+                            <div class="mt-2 font-mono text-xl">{{(data.btc.marketCap / 1000000000) | number: '1.0-2' | currency}}B</div>
+                        </div>
+                        <div class="p-4 leading-none border border-r-0">
+                            <div class="text-sm font-medium text-secondary">Volume</div>
+                            <div class="mt-2 font-mono text-xl">{{(data.btc.volume / 1000000000) | number: '1.0-2' | currency}}B</div>
+                        </div>
+                        <div class="p-4 leading-none border border-r-0">
+                            <div class="text-sm font-medium text-secondary">Supply</div>
+                            <div class="mt-2 font-mono text-xl">{{(data.btc.supply / 1000000) | number: '1.0-2'}}M</div>
+                        </div>
+                        <div class="p-4 leading-none rounded-r-xl border">
+                            <div class="text-sm font-medium text-secondary">All Time High</div>
+                            <div class="mt-2 font-mono text-xl">{{data.btc.allTimeHigh | currency:'USD'}}</div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
+</div>

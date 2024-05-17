@@ -1,0 +1,87 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+    <!-- Header -->
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        <!-- Loader -->
+        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+            <!-- Afficher une barre de progression lorsque isLoading est vrai -->
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+        </div>
+        <!-- Titre -->
+        <div class="text-4xl font-extrabold tracking-tight">Cards</div>
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <!-- Champ de recherche -->
+            <mat-form-field class="fuse-mat-dense fuse-mat-rounded min-w-64" [subscriptSizing]="'dynamic'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Search cards'">
+            </mat-form-field>
+            <!-- Bouton Ajouter une carte -->
+            <button class="ml-4"
+                mat-flat-button [color]="'primary'"
+                 (click)="addCard()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Add</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex flex-auto overflow-hidden">
+        <!-- Liste des cartes -->
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+            <ng-container *ngIf="(cards$ | async) as cards">
+                <ng-container *ngIf="cards.length > 0; else noCards">
+                    <div class="grid">
+                        <!-- En-tête de la grille -->
+                        <div class="mat-sort test-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5" matSort matSortDisableClear>
+                            <!-- En-tête position (visible uniquement en lg) -->
+                            <div [mat-sort-header]="'position'" class="hidden lg:block">Position</div>
+                            <!-- En-tête titre (visible en md et supérieur) -->
+                            <div class="hidden md:block" [mat-sort-header]="'title'">Title</div>
+                            <!-- En-tête assignedTo (visible uniquement en lg) -->
+                            <div class="hidden lg:block" [mat-sort-header]="'assignedTo'">Assigned To</div>
+                            <!-- En-tête startDate (visible uniquement en lg) -->
+                            <div class="hidden lg:block" [mat-sort-header]="'startDate'">Start Date</div>
+                            <!-- En-tête endDate (visible uniquement en lg) -->
+                            <div class="hidden lg:block" [mat-sort-header]="'endDate'">End Date</div>
+                        </div>
+                        <!-- Lignes -->
+                        <ng-container *ngFor="let card of cards; trackBy: trackByFn">
+                            <a class="test-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b group w-full select-none hover:bg-gray-100 dark:hover:bg-hover" (click)="openCardDetails(card.id)" cdkDrag>
+                                <!-- Position de la carte (visible uniquement en lg) -->
+                                <div class="hidden lg:flex items-center">{{card.position}}</div>
+                                <!-- Titre de la carte (visible en sm et supérieur) -->
+                                <div class="hidden sm:block truncate">{{card.title}}</div>
+                                <!-- Assigné à (visible uniquement en lg) -->
+                                <div class="hidden lg:flex items-center">
+                                    <div class="min-w-4">{{card.assigned_to}}</div>
+                                    <!-- Bas stock -->
+                                </div>
+                                <!-- Date de début (visible uniquement en lg) -->
+                                <div class="hidden lg:flex items-center">
+                                    <div class="min-w-4">{{card.start_date}}</div>
+                                    <!-- Bas stock -->
+                                </div>
+                                <!-- Date de fin (visible uniquement en lg) -->
+                                <div class="hidden lg:flex items-center">
+                                    <div class="min-w-4">{{card.end_date}}</div>
+                                    <!-- Bas stock -->
+                                </div>
+                                <!-- Bouton de détails -->
+                             
+                            </a>
+                        </ng-container>
+                    </div>
+                    <!-- Pagination -->
+                    <mat-paginator class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent" [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination.totalCount" [pageIndex]="pagination.page - 1" [pageSize]="pagination.size" [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true">
+                    </mat-paginator>
+                </ng-container>
+            </ng-container>
+            <!-- Aucune carte -->
+            <ng-template #noCards>
+                <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no cards!</div>
+            </ng-template>
+        </div>
+    </div>
+</div>

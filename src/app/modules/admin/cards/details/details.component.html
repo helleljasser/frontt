@@ -1,0 +1,96 @@
+<div class="flex flex-col flex-auto md:w-240 max-h-240 -m-6 overflow-y-auto">
+    <!-- En-tête -->
+    <div class="flex items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">Card</div>
+        <!-- Bouton de fermeture -->
+        <button mat-icon-button (click)="matDialogRef.close()" [tabIndex]="-1">
+            <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        </button>
+    </div>
+    <!-- Formulaire du tableau -->
+    <form class="flex flex-col flex-0  w-full p-6 sm:p-8 space-y-6 overflow-y-auto" [formGroup]="cardForm">
+        <div class="flex flex-auto flex-wrap">
+            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                <div class="flex">
+                    <!-- First Name -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>title</mat-label>
+                        <input matInput formControlName="title">
+                    </mat-form-field>
+
+                    <!-- Last Name -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>position</mat-label>
+                        <input matInput type="number" formControlName="position">
+                    </mat-form-field>
+                </div>
+                <!-- Email --> 
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>user story</mat-label>
+                    <textarea matInput [formControlName]="'user_story'" [rows]="1" cdkTextareaAutosize [cdkAutosizeMinRows]="1"></textarea>
+                </mat-form-field>
+
+                <!-- Gender and Date of Birth -->
+         
+            
+            </div>
+            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+              
+                <div class="flex">
+                    <!-- Date of Hire -->
+                    <mat-form-field class="w-1/2 pr-2">
+                        <mat-label>startDate</mat-label>
+                        <input matInput [matDatepicker]="hireDatePicker" formControlName="start_date">
+                        <mat-datepicker-toggle matSuffix [for]="hireDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #hireDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- Date of last login -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>end Date</mat-label>
+                        <input matInput [matDatepicker]="lastDatePicker" formControlName="end_date">
+                        <mat-datepicker-toggle matSuffix [for]="lastDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #lastDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex">
+                    <!-- Status -->
+                    <mat-form-field class="w-1/2 pr-2">
+                            <mat-label>Assigned To</mat-label>
+                            <textarea matInput [formControlName]="'assigned_to'" [rows]="1" cdkTextareaAutosize [cdkAutosizeMinRows]="1"></textarea>
+                        </mat-form-field>
+                    <!-- Created At -->
+                    <mat-form-field class="w-1/2 pl-2">
+                        <mat-label>Created At</mat-label>
+                        <input matInput [matDatepicker]="createdAtDatePicker" formControlName="created_at" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="createdAtDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #createdAtDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <!-- Boutons -->
+        <div class="flex items-center justify-between w-full border-t px-8 py-4">
+            <!-- Bouton de suppression -->
+            <button class="-ml-4" mat-button [color]="'warn'" (click)="deleteCard()">Delete</button>
+            <!-- Message flash -->
+            <div class="flex items-center">
+                <div class="flex items-center mr-4" *ngIf="flashMessage">
+                    <!-- Message de succès -->
+                    <ng-container *ngIf="flashMessage === 'success'">
+                        <mat-icon class="text-green-500" [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <span class="ml-2">Project updated</span>
+                    </ng-container>
+                    <!-- Message d'erreur -->
+                    <ng-container *ngIf="flashMessage === 'error'">
+                        <mat-icon class="text-red-500" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                        <span class="ml-2">An error occurred, try again!</span>
+                    </ng-container>
+                </div>
+                <!-- Bouton de mise à jour -->
+                <button mat-flat-button [color]="'primary'" (click)="updateCard()">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
